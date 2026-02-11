@@ -1,4 +1,3 @@
-import sys
 from collections import deque
 
 def infix_to_rnp(text: str):
@@ -61,10 +60,4 @@ def infix_to_rnp(text: str):
 
     return queue
 
-def main():
-    arg: str = sys.argv[1]
-    print(infix_to_rnp(arg))
 
-
-if __name__ == "__main__":
-    main()
