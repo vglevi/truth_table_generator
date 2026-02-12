@@ -1,7 +1,10 @@
+from scripts.calculate_truth_value import calculate_truth_value
+
 from collections import deque
 
+operator_precedence = {"~": 0, "&": 1, "|": 2, "->": 3, "<->": 4}
+
 def infix_to_rnp(text: str):
-    operator_precedence = {"~": 0, "&": 1, "|": 2, "->": 3, "<->": 4}
     text = text.replace(" ", "")
 
     stack = []
@@ -23,7 +26,7 @@ def infix_to_rnp(text: str):
                 operator = "<->"
             else:
                 operand += text[i]
-        
+
         elif text[i] not in {"(", ")"}:
             operand += text[i]
 
@@ -31,7 +34,7 @@ def infix_to_rnp(text: str):
             if operand:
                 queue.append(operand)
                 operand = ""
-            while stack and stack[-1] != "(" and operator_precedence[stack[-1]] < operator_precedence[text[i]]:
+            while stack and stack[-1] != "(" and operator_precedence[stack[-1]] < operator_precedence[operator]:
                 queue.append(stack.pop())
             stack.append(operator)
             i += len(operator)
@@ -60,4 +63,27 @@ def infix_to_rnp(text: str):
 
     return queue
 
+def get_variables(rnp: deque):
+    return [v for v in rnp if v not in operator_precedence]
 
+def get_forms(rnp: deque, variables_with_values: dict):
+    forms = variables_with_values.copy()
+    rpn = rnp.copy()
+    stack = []
+    while rpn:
+        item = rpn.popleft()
+        if item not in operator_precedence:
+            stack.append(item)
+        elif item == "~":
+            a = stack.pop()
+            form = f"~{a}"
+            stack.append(form)
+            forms[form] = calculate_truth_value(forms, item, [a])
+        else:
+            b = stack.pop()
+            a = stack.pop()
+            form = " ".join([a, item, b])
+            stack.append(f"({form})")
+            forms[form] = calculate_truth_value(forms, item, [a, b])
+
+    return forms
