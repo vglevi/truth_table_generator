@@ -28,7 +28,7 @@ The operators are:
 - ```->```: if
 - ```<->```: iff
 
-The precedence of the operators follow the conventions, i.e. ```~``` has the highest and ```<->``` has the lowest prcedence. The output will always indicate the order of operations by paranthesis.
+The precedence of the operators follows the conventions, i.e. ```~``` has the highest and ```<->``` has the lowest precedence. The output will always indicate the order of operations by paranthesis.
 
 You can owerwrite the order of operations by using ```( )```
 
