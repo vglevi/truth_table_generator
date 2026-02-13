@@ -61,6 +61,9 @@ def infix_to_rnp(text: str):
     while stack:
         queue.append(stack.pop())
 
+    if "(" in queue or ")" in queue:
+        raise Exception
+
     return queue
 
 def get_variables(rnp: deque):
