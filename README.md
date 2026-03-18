@@ -9,6 +9,7 @@ A CLI tool for generating truth tables of propositional formulas
 3. cd in it
 4. If you want to ensure to run the program in the recommended version, get the uv project/package manager
 5. Run the program:
+
 Run with uv:
 ```
 uv run main.py "<formula>"
